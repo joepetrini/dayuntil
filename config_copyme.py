@@ -1,0 +1,32 @@
+import os
+
+DEBUG = True
+
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+
+# Database connection string
+SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BASE_DIR, 'data.db')
+#SQLALCHEMY_DATABASE_URI = 'mysql://user:pass@localhost/dbname'
+SQLALCHEMY_MIGRATE_REPO = os.path.join(BASE_DIR, 'migrations')
+DATABASE_CONNECT_OPTIONS = {}
+
+# App threads, 2 per available cores
+THREADS_PER_PAGE = 2
+
+# Enable protection agains *Cross-site Request Forgery (CSRF)*
+CSRF_ENABLED = True
+
+# Use a secure, unique and absolutely secret key for
+CSRF_SESSION_KEY = "secret"
+
+# Secret key for signing cookies
+SECRET_KEY = "secret"
+
+# Flask-Mail settings
+MAIL_SERVER = 'your.mailserver.com'
+MAIL_PORT = 25
+#MAIL_USERNAME = None
+#MAIL_PASSWORD = None
+
+# administrator list
+ADMINS = ['you@example.com']
