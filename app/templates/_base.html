@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock title %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta property="fb:app_id" content="{{ config.FB_APP_ID }}" />
+
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+
+    <link href="{{url_for('.static', filename='favicon.ico')}}" rel="icon" type="image/x-icon" />
+    <link rel="stylesheet" href="{{url_for('.static', filename='days-until.css')}}">
+
+    <script src="{{url_for('.static', filename='jquery.js')}}"></script>
+    <script src="{{url_for('.static', filename='days-until.js')}}"></script>
+
+    <script type="text/javascript">
+      {% block head_js %}{% endblock %}
+    </script>
+  </head>
+
+<body>
+    <script type="text/javascript">
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId      : '{{ config.FB_APP_ID }}',
+                status     : true,
+                cookie     : true,
+                xfbml      : true
+            });
+
+            FB.Event.subscribe('auth.login', function(response) {
+                window.location = window.location;
+            });
+        };
+
+        // Load the SDK Asynchronously
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/all.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+  <div class="pure-g" style="border-bottom:1px solid #ddd;background:rgb(250,250,250)">
+    <div class="pure-u-1-2"></div>
+    <div class="pure-u-1-2">
+              {% if g.user %}
+                {{g.user.name}} <a href="/logout" id="logout">[logout]</a>
+              {% else %}
+                <div class="fb-login-button" data-size='large' data-perms="basic_info">Sign in</div>
+              {% endif %}
+    </div>
+  </div>
+
+
+
+
+
+    <div class="container">
+        {% block content %} {% endblock %}
+    </div>
+
+    <script>
+        document.getElementById('logout').onclick = function() {
+            FB.logout(function(response) { });
+        };
+    </script>
+</body>
+</html>

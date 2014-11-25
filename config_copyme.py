@@ -8,12 +8,12 @@ BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BASE_DIR, 'data.db')
 #SQLALCHEMY_DATABASE_URI = 'mysql://user:pass@localhost/dbname'
 SQLALCHEMY_MIGRATE_REPO = os.path.join(BASE_DIR, 'migrations')
-DATABASE_CONNECT_OPTIONS = {}
+#DATABASE_CONNECT_OPTIONS = {}
 
 # App threads, 2 per available cores
 THREADS_PER_PAGE = 2
 
-# Enable protection agains *Cross-site Request Forgery (CSRF)*
+# Enable protection against *Cross-site Request Forgery (CSRF)*
 CSRF_ENABLED = True
 
 # Use a secure, unique and absolutely secret key for
@@ -30,3 +30,6 @@ MAIL_PORT = 25
 
 # administrator list
 ADMINS = ['you@example.com']
+
+FB_APP_ID = ''
+FB_SECRET = ''
