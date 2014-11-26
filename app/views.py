@@ -16,15 +16,28 @@ def index():
     return render_template(_t('landing.html'))
 
 
-@app.route('/<day>/<month>/<year>')
+@app.route('/sitemap.xml')
+def sitemap():
+    return ""
+
+
+@app.route('/<month>/<day>/<year>')
 def mdy(day, month, year):
-    return render_template(_t('day.html'))
+    content = get_content(year=year, month=month, day=day)
+    return render_template(_t('day.html'), c=content)
+
+
+@app.route('/e/<event_name>')
+def event(event_name):
+    content = get_content(event=event_name)
+    return render_template(_t('day.html'), c=content)
 
 
 @app.route('/api/timezone')
 def api_timezone():
     tz = request.args.get('tz')
-    return ""
+    session['tz'] = tz
+    return tz
 
 
 @app.route('/logout')
@@ -51,7 +64,6 @@ def get_current_user():
     create the user and insert it into the database.  If the user is not logged
     in, None will be set to g.user.
     """
-
     # Set the user in the session dictionary as a global g.user and bail out
     # of this function early.
     if session.get('user'):
