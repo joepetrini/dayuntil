@@ -31,5 +31,6 @@ MAIL_PORT = 25
 # administrator list
 ADMINS = ['you@example.com']
 
+ANALYTICS_ID = ''
 FB_APP_ID = ''
 FB_SECRET = ''

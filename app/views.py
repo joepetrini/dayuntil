@@ -11,29 +11,32 @@ from logic import *
 #    return dict(google_analytics_id=app.config.get('GOOGLE_ANALYTICS_ID', None))
 
 
+@app.route('/')
+def index():
+    return render_template(_t('landing.html'))
+
+
+@app.route('/<day>/<month>/<year>')
+def mdy(day, month, year):
+    return render_template(_t('day.html'))
+
+
+@app.route('/api/timezone')
+def api_timezone():
+    tz = request.args.get('tz')
+    return ""
+
+
 @app.route('/logout')
 def logout():
-    """Log out the user from the application.
-
+    """
+    Log out the user from the application.
     Log out the user from the application by removing them from the
     session.  Note: this does not log the user out of Facebook - this is done
     by the JavaScript SDK.
     """
     session.pop('user', None)
     return redirect(url_for('index'))
-
-
-@app.route('/')
-def index():
-    return render_template(_t('landing.html'))
-
-
-@app.route('/login/<user>/<token>')
-def login(user, token):
-    u = get_or_create_user(user, token)
-    print "setting user id in session to %s" % u.id
-    session['user_id'] = u.id
-    return ""
 
 
 @app.before_request
