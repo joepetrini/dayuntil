@@ -10,6 +10,21 @@ from models import User
 class Content(object):
     delta = None
 
+    def __init__(self, tz):
+        self.tz = tz
+
+    @property
+    def heading(self):
+        return 'heading'
+
+    @property
+    def subheading(self):
+        return 'subheading'
+
+    @property
+    def desc(self):
+        return 'desc'
+
     @property
     def months(self):
         if self.delta.years > 0:
@@ -18,8 +33,8 @@ class Content(object):
 
 
 def get_content(year=None, month=None, day=None, event=None):
-    c = Content()
     tz = timezone(session.get('tz', app.config['DEFAULT_TZ']))
+    c = Content(tz)
     l_now = tz.localize(datetime.now())
     # DMY based
     if year is not None:
@@ -28,4 +43,5 @@ def get_content(year=None, month=None, day=None, event=None):
         c.date = l_date
         return c
     # Event based
+    if event is not None:
         return c

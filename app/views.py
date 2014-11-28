@@ -1,9 +1,11 @@
+import datetime
 from flask import flash, g, redirect, current_app, render_template, request, url_for, session
 from facebook import get_user_from_cookie, GraphAPI
 #from flask.ext.security import LoginForm, current_user, login_required, login_user
 from app import app
-from helpers import _t
+from helpers import _t, _ab
 from logic import *
+from models import Day
 
 
 #@app.context_processor
@@ -27,9 +29,11 @@ def mdy(day, month, year):
     return render_template(_t('day.html'), c=content)
 
 
-@app.route('/e/<event_name>')
-def event(event_name):
-    content = get_content(event=event_name)
+@app.route('/<day_name>')
+def event(day_name):
+    # TODO split year if exists
+    day = Day.query.get(day_name.lower())
+    content = get_content(event=day)
     return render_template(_t('day.html'), c=content)
 
 
@@ -64,11 +68,16 @@ def get_current_user():
     create the user and insert it into the database.  If the user is not logged
     in, None will be set to g.user.
     """
+    # A/B test value
+    g.ab = _ab()
+
     # Set the user in the session dictionary as a global g.user and bail out
     # of this function early.
     if session.get('user'):
         g.user = session.get('user')
         return
+
+
 
     # Attempt to get the short term access token for the current user.
     result = get_user_from_cookie(cookies=request.cookies, app_id=app.config['FB_APP_ID'],

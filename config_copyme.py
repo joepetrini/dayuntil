@@ -37,3 +37,5 @@ ADMINS = ['you@example.com']
 ANALYTICS_ID = ''
 FB_APP_ID = ''
 FB_SECRET = ''
+
+ADSENSE_TOP = ""

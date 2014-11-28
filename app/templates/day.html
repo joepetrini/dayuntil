@@ -4,12 +4,23 @@
 {% block meta_kw %}{{ c.title }}{% endblock %}
 
 {% block content %}
-  {{c.delta.days}} days until {{ c.date }}<br>
-  {{c.months}} months<br>
-  {{c.delta.hours}} hours<br>
 
-  <hr>
-  On this day...
-  <hr>
-  Interlinking
+  {{ config.ADSENSE_TOP|safe }}
+
+  <div class="content">
+
+    <div class="pure-g center">
+      <div class="pure-u-1">
+        <h1>{{ c.heading }}</h1>
+        <h2>{{ c.subheading }}</h2>
+        <h3>{{ c.desc }}</h3>
+        <hr>
+        On this day...
+        <hr>
+        Interlinking
+      </div>
+    </div>
+
+  </div>
+
 {% endblock %}
