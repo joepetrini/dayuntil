@@ -38,4 +38,6 @@ ANALYTICS_ID = ''
 FB_APP_ID = ''
 FB_SECRET = ''
 
-ADSENSE_TOP = ""
+ADSENSE_TOP = """
+                    FULL ADSENSE CODE HERE
+              """

@@ -9,8 +9,29 @@
 }
 
 /*.center {margin: 0 auto;}*/
+.right {
+    text-align: right;
+}
 
-body {font-family: 'Montserrat', sans-serif; color: #423F37; font-size:20px; font-weight:400;}
+body {
+    font-family: 'Montserrat', sans-serif;
+    color: #423F37;
+    font-size:20px;
+    font-weight:400;
+}
 
-#menu {background-color: #191818;border-bottom:1px solid #dfdfdf; color:#999;padding:10px;}
-#menu a {color: #999;}
+#menu {
+    background-color: #191818;
+    border-bottom:1px solid #dfdfdf;
+    color:#bbb;
+    padding:10px;
+}
+
+#menu a {
+    color: #bbb;
+    text-decoration: none;
+}
+#menu a:hover {
+    color: #dfdfdf;
+    text-decoration: none;
+}

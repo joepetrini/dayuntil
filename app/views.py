@@ -20,7 +20,7 @@ def index():
 
 @app.route('/sitemap.xml')
 def sitemap():
-    return ""
+    return get_sitemap()
 
 
 @app.route('/<month>/<day>/<year>')

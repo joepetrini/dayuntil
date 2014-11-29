@@ -12,7 +12,7 @@ Mobility(app)
 # Check config has all values in config_copy_me
 diff = set(dir(import_string('config_copyme'))) - set(dir(import_string('config')))
 if len(diff) > 0:
-    print "Missing config values %s" % diff
+    print "Abort!  Missing config values %s" % diff
     sys.exit(0)
 
 app.config.from_object('config')
