@@ -1,9 +1,10 @@
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 from pytz import timezone
+import redis
 from flask import request, session
 from app import app, db
-from models import Day
+from models import Day, Fact
 
 
 # Used by template to render all page content
@@ -20,7 +21,7 @@ class Content(object):
         if self.event:
             return "Days until %s %s" % (self.event.name, self.event.date.year)
         else:
-            return "Days until %s" % self.date
+            return "Days until %s" % self.date.strftime("%A %B %Y")
 
     @property
     def heading(self):
@@ -30,24 +31,40 @@ class Content(object):
     def subheading(self):
         if self.event:
             if self.delta.days > 0:
-                return "until %s %s" % (self.event.name, self.event.date.year)
+                return "Until %s %s" % (self.event.name, self.event.date.year)
             else:
-                return "since %s %s" % (self.event.name, self.event.date.year)
+                return "Since %s %s" % (self.event.name, self.event.date.year)
         else:
             if self.delta.days > 0:
-                return "until %s" % (self.date)
+                return "Until %s" % self.date.strftime("%B %d %Y")
             else:
-                return "since %s" % (self.date)
+                return "Since %s" % self.date.strftime("%B %d %Y")
 
     @property
     def desc(self):
-        return 'desc'
+        if self.event:
+            return ""
+        else:
+            return ""
+            #return "A %s" % (self.date.strftime("%A"), self.delta.months
 
     @property
     def months(self):
         if self.delta.years > 0:
             return self.delta.years*12 + self.delta.months
         return self.delta.months
+
+    @property
+    def nearby_events(self):
+        return db.session.query(Day) \
+            .filter(Day.date > self.date) \
+            .order_by(Day.date).limit(5)
+
+    @property
+    def fact(self):
+        d = datetime(2000, self.date.month, self.date.day)
+        f = Fact.query.filter_by(date=d).first()
+        return f.text
 
 
 def get_content(year=None, month=None, day=None, event=None):
@@ -57,10 +74,10 @@ def get_content(year=None, month=None, day=None, event=None):
     # DMY based
     if year is not None:
         l_date = tz.localize(datetime(int(year), int(month), int(day), 0, 0, 0))
-        c.date = l_date
     # Event based
     if event is not None:
         l_date = tz.localize(event.date)
+    c.date = l_date
     c.rdelta = relativedelta(l_date, l_now)
     c.delta = l_date - l_now
     c.event = event

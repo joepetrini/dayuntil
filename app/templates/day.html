@@ -9,15 +9,19 @@
 
   <div class="content">
 
-    <div class="pure-g center">
-      <div class="pure-u-1">
+    <div class="pure-g">
+      <div class="pure-u-1 tcenter">
         <h1>{{ c.heading }}</h1>
         <h2>{{ c.subheading }}</h2>
         <h3>{{ c.desc }}</h3>
         <hr>
-        On this day...
+        Fact: {{ c.fact }}
         <hr>
-        Interlinking
+        Days Until:
+        {% for e in c.nearby_events %}
+          <a href="/{{ e.id }}">{{ e.name }}</a>
+        {% endfor %}
+
       </div>
     </div>
 

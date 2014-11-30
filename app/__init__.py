@@ -3,7 +3,7 @@ from werkzeug.utils import import_string
 from flask import Flask, redirect, url_for, session
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.mobility import Mobility
-
+from flask_debugtoolbar import DebugToolbarExtension
 
 version = "0.1"
 app = Flask(__name__)
@@ -18,6 +18,8 @@ if len(diff) > 0:
 app.config.from_object('config')
 
 db = SQLAlchemy(app)
+toolbar = DebugToolbarExtension(app)
+
 
 # Late import so modules can import their dependencies properly
 from . import models, views

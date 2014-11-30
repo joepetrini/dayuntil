@@ -10,7 +10,7 @@ class User(db.Model, Timestamp):
     id = db.Column(db.String(100), primary_key=True)
     name = db.Column(db.String(255))
     access_token = db.Column(db.String(255))
-    profile_url = db.Column(db.String)
+    profile_url = db.Column(db.String(255))
 
     last_login = db.Column(db.DateTime())
     login_count = db.Column(db.Integer, default=1)
@@ -55,6 +55,15 @@ class Day(db.Model, Timestamp):
     view_count = db.Column(db.Integer(), default=0)
 
 
+class Fact(db.Model, Timestamp):
+    __tablename__ = "facts"
+
+    id = db.Column(db.Integer(), primary_key=True)
+    source = db.Column(db.String(50))
+    date = db.Column(db.DateTime(), nullable=False)
+    text = db.Column(db.Text())
+    active = db.Column(db.Boolean(), default=False)
+    twitter_id = db.Column(db.String(100), nullable=True)
 
 """
 To Handle:

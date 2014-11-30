@@ -1,16 +1,18 @@
 import sys, json
 from werkzeug.utils import import_string
 from sqlalchemy import and_, exc
+import wikipedia
+import redis
+import requests
 from flask.ext.script import Manager
 from flask import g
 from app import app, db
-from app.models import Day
+from app.models import Day, Fact
 #from app.logic import create_card
 #from app.trello import Trello
 #from app.helpers import utc_now
 from app.holidays import *
-import redis
-import requests
+
 
 
 manager = Manager(app)
@@ -29,6 +31,39 @@ def days_from_webcal():
 
         print u
         break
+
+
+@manager.command
+def create_facts():
+    import time
+    r = redis.Redis()
+    date = datetime(2000, 01, 01)
+    for d in range(0, 366):
+        print date
+        url = "http://numbersapi.com/%s/%s/date" % (date.month, date.day)
+        c = r.get(url)
+        if c:
+            c = requests.get(url).text
+            r.set(url, c)
+            time.sleep(.5)
+        f = Fact.query.filter_by(source='numbersapi', date=date, text=c).first()
+        if f is None:
+            f = Fact(source='numbersapi', date=date, text=c, active=True)
+            db.session.add(f)
+            db.session.commit()
+        """ Wikipedia
+        url = "%s_%s" % (date.strftime("%B"), date.day)
+
+        key = "wiki_%s" % url
+        c = r.get(key)
+        if not c:
+            c = wikipedia.page(url).content
+            r.set(key, c)
+            time.sleep(.5)
+        print c
+        break
+        """
+        date = date + timedelta(days=1)
 
 
 @manager.command

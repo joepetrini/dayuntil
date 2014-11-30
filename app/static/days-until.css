@@ -8,14 +8,16 @@
     max-width: 768px;
 }
 
-/*.center {margin: 0 auto;}*/
+.center {margin: 0 auto;}
+.tcenter {text-align: center;}
+
 .right {
     text-align: right;
 }
 
 body {
     font-family: 'Montserrat', sans-serif;
-    color: #423F37;
+    color: #555;
     font-size:20px;
     font-weight:400;
 }
