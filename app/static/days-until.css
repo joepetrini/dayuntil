@@ -22,11 +22,35 @@ body {
     font-weight:400;
 }
 
+input.big {color: #555; text-align: center; margin-right:10px;}
+input.big2 {width:45px; font-size:30px;}
+input.big4 {width:90px; font-size:30px;}
+input.err {border:2px solid #C33;}
+#date-form {display: block; color:#999; float: left;}
+#date-form h1 {color:#555;margin-top:20px;}
+#date-form li {display: block; float: left}
+
+
+a.button-secondary {
+    margin: 0.25em;
+    background: #fff;
+    border: 1px solid #ddd;
+}
+
 #menu {
     background-color: #191818;
     border-bottom:1px solid #dfdfdf;
     color:#bbb;
     padding:10px;
+}
+
+a {
+    color: #0078e7;
+    text-decoration: none;
+}
+a:visited {
+    color: #0078e7;
+    text-decoration: none;
 }
 
 #menu a {

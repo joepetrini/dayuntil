@@ -18,7 +18,8 @@ def index():
     events = db.session.query(Day) \
         .filter(Day.date > datetime.now()) \
         .order_by(Day.date).limit(10)
-    return render_template(_t('landing.html'), days=events)
+    years = range(datetime.today().year, datetime.today().year + 10)
+    return render_template(_t('landing.html'), days=events, years=years)
 
 
 @app.route('/sitemap.xml')

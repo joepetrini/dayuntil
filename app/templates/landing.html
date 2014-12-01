@@ -1,11 +1,116 @@
 {% extends '_base.html' %}
+{% block title %}Days Until - How many days until or since a date{% endblock %}
+{% block meta_desc %}Find out how many days until a specified date{% endblock %}
+{% block meta_kw %}days until,calculate days until,how many days,how many days until,day calc tool,days until my birthday{% endblock %}
 
+{% block head %}
+  <script type="text/javascript">
+    function submit(){
+      var m = $('#mm').val();
+      var d = $('#dd').val();
+      var y = $('#yyyy').val();
+      var valid = true;
+
+      if (m.length == 1){ m = '0'+m;}
+      if (d.length == 1){ m = '0'+d;}
+
+      if (/\d{2}/.test(m) == false){
+        $('#mm').addClass('err');
+        valid = false;
+      }
+
+      if (/\d{2}/.test(d) == false){
+        $('#dd').addClass('err');
+        valid = false;
+      }
+
+      if (/\d{4}/.test(y) == false){
+        $('#yyyy').addClass('err');
+        valid = false;
+      }
+
+      console.log(valid);
+      if (valid){
+        window.location = '/' + m + '/' + d + '/' + y;
+      }
+
+    }
+
+    $( document ).ready(function() {
+      $('#mm').focus();
+
+      $('input').keypress(function (e) {
+        if (e.which == 13) {
+          submit();
+          return false;
+        }
+      });
+
+      $('#mm').keyup(function() {
+        var m = $('#mm').val();
+        if (m.length > 1){
+          $('#dd').focus();
+        }
+      });
+
+      $('#dd').keyup(function() {
+        var m = $('#dd').val();
+        if (m.length > 1){
+          $('#yyyy').focus();
+        }
+      });
+
+    });
+  </script>
+{% endblock %}
 {% block content %}
 <div class="content">
+  <div class="pure-g" style="">
+    <!--<div class="pure-u-2-5" style="vertical-align: bottom;padding-top:10px;"></div>-->
+    <div class="pure-u-1">
+      <ul id="date-form">
+        <li style="margin-right:20px"><h1>Days Until</h1></li>
+        <li>
+          mm<br>
+          <input id="mm" class="big big2" type="text" value="">
+        </li>
+        <li>
+          dd<br>
+          <input id="dd" class="big big2" type="text" value="">
+        </li>
+        <li>
+          yyyy<br>
+          <input id="yyyy" onfocus="this.value = this.value;" class="big big4" type="text" value="{{years.0}}">
+        </li>
+        <li>
+          &nbsp;<br>
+          <input id="days-until-go" onclick="submit()" type="button" class="pure-button pure-button-primary" value="Go">
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!--
+  <hr>
+
   <div class="pure-g">
     <div class="pure-u-1">
+      {% for y in years %}
+        <a class="button-secondary pure-button">{{y}}</a>
+      {% endfor %}
+    </div>
+   </div>
+  -->
+
+  <hr>
+
+  <div class="pure-g">
+    <div class="pure-u-1-5">
+      Upcoming Events
+    </div>
+    <div class="pure-u-4-5">
       {% for e in days %}
-      <a href="/{{ e.id }}">{{ e.name }} {{ e.date.year }}</a>
+      <a class="button-secondary pure-button" href="/{{ e.id }}">{{ e.name }} {{ e.date.year }}</a>
       {% endfor %}
     </div>
   </div>
