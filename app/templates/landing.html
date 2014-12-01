@@ -2,6 +2,13 @@
 
 {% block content %}
 <div class="content">
-  <a href="/11/11/2014">aasldkfj</a>
+  <div class="pure-g">
+    <div class="pure-u-1">
+      {% for e in days %}
+      <a href="/{{ e.id }}">{{ e.name }} {{ e.date.year }}</a>
+      {% endfor %}
+    </div>
+  </div>
+
 </div>
 {% endblock %}

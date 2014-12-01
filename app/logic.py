@@ -17,6 +17,30 @@ class Content(object):
         self.tz = tz
 
     @property
+    def meta_keywords(self):
+        if self.event:
+            kw = "Days until %s %s, " % (self.event.name, self.date.year)
+            kw += "Countdown until %s %s, " % (self.event.name, self.date.year)
+            kw += "days until, how many days, how much time"
+        else:
+            kw = "Days until %s, " % self.date.strftime("%A %B %d %Y")
+            kw += "Countdown until %s, " % self.date.strftime("%A %B %d %Y")
+            kw += "days until, how many days, hours until, date calculator"
+        return kw
+
+    @property
+    def meta_desc(self):
+        if self.event:
+            d = "Days until %s %s. " % (self.event.name, self.date.year)
+            d += "Countdown until %s %s. " % (self.event.name, self.date.year)
+            d += "DayUntil - Find out how many days left"
+        else:
+            d = "Days until %s. " % self.date.strftime("%A %B %d %Y")
+            d += "Countdown until %s. " % self.date.strftime("%A %B %d %Y")
+            d += "DayUntil - Find out how many days left"
+        return d
+
+    @property
     def title(self):
         if self.event:
             return "Days until %s %s" % (self.event.name, self.event.date.year)

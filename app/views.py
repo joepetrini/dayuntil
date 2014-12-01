@@ -15,7 +15,10 @@ from models import Day
 
 @app.route('/')
 def index():
-    return render_template(_t('landing.html'))
+    events = db.session.query(Day) \
+        .filter(Day.date > datetime.now()) \
+        .order_by(Day.date).limit(10)
+    return render_template(_t('landing.html'), days=events)
 
 
 @app.route('/sitemap.xml')
