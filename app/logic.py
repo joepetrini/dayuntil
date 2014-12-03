@@ -112,6 +112,14 @@ def get_sitemap():
     s = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
     s += "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n"
 
+    # Data driven events
+    for d in Day.query.all():
+        s += "\t<url>\n"
+        s += "\t\t<loc>http://%s/%s</loc>\n" % ('www.dayuntil.com', d.id)
+        s += "\t\t<changefreq>daily</changefreq>\n"
+        s += "\t</url>\n"
+
+
     # Go 3 years into the future for regular dates
     now = datetime.today() - timedelta(days=180)
     for i in range(0, 1180):
@@ -119,13 +127,6 @@ def get_sitemap():
         ds = "%02d/%02d/%s" % (d.month, d.day, d.year)
         s += "\t<url>\n"
         s += "\t\t<loc>http://%s/%s</loc>\n" % ('www.dayuntil.com', ds)
-        s += "\t\t<changefreq>daily</changefreq>\n"
-        s += "\t</url>\n"
-
-    # Data driven events
-    for d in Day.query.all():
-        s += "\t<url>\n"
-        s += "\t\t<loc>http://%s/%s</loc>\n" % ('www.dayuntil.com', d.id)
         s += "\t\t<changefreq>daily</changefreq>\n"
         s += "\t</url>\n"
 

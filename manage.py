@@ -38,6 +38,17 @@ def create_days():
     ids = set([u.id for u in Day.query.all()])
     for y in range(2010, 2025):
 
+        try:
+            id = 'summer-%s' % y
+            if id in ids: continue;
+            n, dt = summer_day(y)
+            day = Day(id=id, sys_name='summer', name="Summer", date=dt)
+            db.session.add(day)
+        except KeyError:
+            pass
+
+
+        sys.exit(0)
         ####################
         ####### Summer #####
         ####################
@@ -101,11 +112,11 @@ def create_facts():
         print date
         url = "http://numbersapi.com/%s/%s/date" % (date.month, date.day)
         c = r.get(url)
-        if c:
+        if not c:
             c = requests.get(url).text
             r.set(url, c)
             time.sleep(.5)
-        f = Fact.query.filter_by(source='numbersapi', date=date, text=c).first()
+        f = Fact.query.filter_by(source='numbersapi', date=date).first()
         if f is None:
             f = Fact(source='numbersapi', date=date, text=c, active=True)
             db.session.add(f)

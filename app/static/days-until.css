@@ -36,6 +36,9 @@ a.button-secondary {
     background: #fff;
     border: 1px solid #ddd;
 }
+a.event {
+    width: 130px;
+}
 
 #menu {
     background-color: #191818;
@@ -44,11 +47,12 @@ a.button-secondary {
     padding:10px;
 }
 
-a {
+
+a:visited {
     color: #0078e7;
     text-decoration: none;
 }
-a:visited {
+a.event {
     color: #0078e7;
     text-decoration: none;
 }

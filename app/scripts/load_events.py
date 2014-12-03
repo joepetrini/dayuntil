@@ -4,4 +4,4 @@ from app.models import Day
 
 
 #ids = set([u.id for u in Day.query.all()])
-import_string('app.holidays')
+#import_string('app.holidays')

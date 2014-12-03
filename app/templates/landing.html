@@ -12,7 +12,7 @@
       var valid = true;
 
       if (m.length == 1){ m = '0'+m;}
-      if (d.length == 1){ m = '0'+d;}
+      if (d.length == 1){ d = '0'+d;}
 
       if (/\d{2}/.test(m) == false){
         $('#mm').addClass('err');
@@ -105,12 +105,12 @@
   <hr>
 
   <div class="pure-g">
-    <div class="pure-u-1-5">
+    <div class="pure-u-1-6">
       Upcoming Events
     </div>
-    <div class="pure-u-4-5">
+    <div class="pure-u-5-6">
       {% for e in days %}
-      <a class="button-secondary pure-button" href="/{{ e.id }}">{{ e.name }} {{ e.date.year }}</a>
+      <a class="button-secondary pure-button event" href="/{{ e.id }}">{{ e.name }} {{ e.date.year }}</a>
       {% endfor %}
     </div>
   </div>
