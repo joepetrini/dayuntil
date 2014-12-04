@@ -30,6 +30,9 @@ input.err {border:2px solid #C33;}
 #date-form h1 {color:#555;margin-top:20px;}
 #date-form li {display: block; float: left}
 
+.days-description {
+    font-size: 16px;
+}
 
 a.button-secondary {
     margin: 0.25em;
@@ -37,7 +40,7 @@ a.button-secondary {
     border: 1px solid #ddd;
 }
 a.event {
-    width: 130px;
+    width: 150px;
 }
 
 #menu {
@@ -61,6 +64,7 @@ a.event {
     color: #bbb;
     text-decoration: none;
 }
+
 #menu a:hover {
     color: #dfdfdf;
     text-decoration: none;

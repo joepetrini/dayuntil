@@ -67,7 +67,7 @@ class Content(object):
     @property
     def desc(self):
         if self.event:
-            return ""
+            return self.event.desc
         else:
             return ""
             #return "A %s" % (self.date.strftime("%A"), self.delta.months

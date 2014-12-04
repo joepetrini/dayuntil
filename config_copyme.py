@@ -41,3 +41,7 @@ FB_SECRET = ''
 ADSENSE_TOP = """
                     FULL ADSENSE CODE HERE
               """
+
+ADSENSE_MOB = """
+                    FULL ADSENSE CODE HERE
+              """

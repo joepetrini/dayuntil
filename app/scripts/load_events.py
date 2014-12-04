@@ -21,19 +21,27 @@ for y in range(datetime.today().year, datetime.today().year + 11):
         name = r['name']
         date = r['date']
         sys_name = r.get('sys_name', name.replace(' ', '-').lower())
-        priority = r.get('priority', name.replace(' ', '-').lower())
+        priority = r.get('priority', 0)
+        desc = str(r.get('desc', '')).strip()
+        alt_names = r.get('alt_names', '')
+        link = r.get('link', '')
+        link_title = r.get('link_title', '')
         id = "%s-%s" % (sys_name, y)
         if id not in ids:
             print "creating %s" % id
             d = Day(id=id, sys_name=sys_name, name=name, date=date)
             d.priority = priority
             db.session.add(d)
-            db.session.commit()
         else:
             d = Day.query.get(id)
-            d.sys_name = sys_name
-            d.name = name
-            d.date = date
-            d.priority = priority
-            db.session.commit()
+        d.sys_name = sys_name
+        d.name = name
+        d.date = date
+        d.priority = priority
+        print "setting desc to %s" % desc
+        d.desc = desc
+        d.alt_names = alt_names
+        d.link = link
+        d.link_title = link_title
+        db.session.commit()
 

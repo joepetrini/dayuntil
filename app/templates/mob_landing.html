@@ -1,4 +1,4 @@
-{% extends '_mob_base.html' %}
+{% extends '_base.html' %}
 {% block title %}Days Until - How many days until or since a date{% endblock %}
 {% block meta_desc %}Find out how many days until a specified date{% endblock %}
 {% block meta_kw %}days until,calculate days until,how many days,how many days until,day calc tool,days until my birthday{% endblock %}
@@ -14,17 +14,17 @@
       if (m.length == 1){ m = '0'+m;}
       if (d.length == 1){ d = '0'+d;}
 
-      if (/\d{2}/.test(m) == false){
+      if (/\d{2}/.test(m) == false || parseInt(m) > 12 || parseInt(m) < 1 ){
         $('#mm').addClass('err');
         valid = false;
       }
 
-      if (/\d{2}/.test(d) == false){
+      if (/\d{2}/.test(d) == false || parseInt(d) > 31 || parseInt(d) < 1){
         $('#dd').addClass('err');
         valid = false;
       }
 
-      if (/\d{4}/.test(y) == false){
+      if (/\d{4}/.test(y) == false || parseInt(y) > 2500 || parseInt(y) < 1000){
         $('#yyyy').addClass('err');
         valid = false;
       }
@@ -47,6 +47,7 @@
       });
 
       $('#mm').keyup(function() {
+        return;
         var m = $('#mm').val();
         if (m.length > 1){
           $('#dd').focus();
@@ -54,6 +55,7 @@
       });
 
       $('#dd').keyup(function() {
+        return;
         var m = $('#dd').val();
         if (m.length > 1){
           $('#yyyy').focus();
@@ -65,11 +67,18 @@
 {% endblock %}
 {% block content %}
 <div class="content">
+
+  <div class="pure-g" style="">
+    <!--<div class="pure-u-2-5" style="vertical-align: bottom;padding-top:10px;"></div>-->
+    <div class="pure-u-1">
+        <h1>Days Until</h1>
+    </div>
+  </div>
+
   <div class="pure-g" style="">
     <!--<div class="pure-u-2-5" style="vertical-align: bottom;padding-top:10px;"></div>-->
     <div class="pure-u-1">
       <ul id="date-form">
-        <li style="margin-right:20px"><h1>Days Until</h1></li>
         <li>
           mm<br>
           <input id="mm" class="big big2" type="text" value="">
@@ -103,17 +112,15 @@
   -->
 
   <hr>
-
-  <div class="pure-g">
-    <div class="pure-u-1-6">
-      Upcoming Events
-    </div>
-    <div class="pure-u-5-6">
-      {% for e in days %}
-      <a class="button-secondary pure-button event" href="/{{ e.id }}">{{ e.name }}</a>
-      {% endfor %}
+  <div class="tcenter">
+    Upcoming Events
+    <div class="pure-g">
+      <div class="pure-u-1">
+        {% for e in days %}
+        <a class="button-secondary pure-button event" href="/{{ e.id }}">{{ e.name }}</a>
+        {% endfor %}
+      </div>
     </div>
   </div>
-
 </div>
 {% endblock %}
