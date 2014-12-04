@@ -51,7 +51,7 @@ class Day(db.Model, Timestamp):
 
     # Repeatabe
     # year = db.Column(db.Integer, nullable=True)
-
+    priority = db.Column(db.Integer(), default=0)
     view_count = db.Column(db.Integer(), default=0)
 
 
