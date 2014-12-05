@@ -6,7 +6,7 @@ from facebook import get_user_from_cookie, GraphAPI
 from app import app
 from helpers import _t, _ab
 from logic import *
-from models import Day
+from models import Day, User
 
 
 #@app.context_processor
@@ -89,7 +89,9 @@ def get_current_user():
     # Set the user in the session dictionary as a global g.user and bail out
     # of this function early.
     if session.get('user'):
+        # TODO query for user
         g.user = session.get('user')
+        print "user in session %s" % g.user
         return
 
 
@@ -121,6 +123,6 @@ def get_current_user():
         session['user'] = dict(name=user.name, profile_url=user.profile_url,
                                id=user.id, access_token=user.access_token)
 
-    # Commit changes to the database and set the user as a global g.user
-    db.session.commit()
-    g.user = session.get('user', None)
+        # Commit changes to the database and set the user as a global g.user
+        db.session.commit()
+        g.user = session.get('user', None)

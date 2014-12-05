@@ -21,7 +21,8 @@ app.config.from_object('config')
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-toolbar = DebugToolbarExtension(app)
+if app.config['DEBUG']:
+    toolbar = DebugToolbarExtension(app)
 
 
 # Late import so modules can import their dependencies properly
