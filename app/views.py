@@ -1,4 +1,5 @@
 import datetime
+import re
 from flask import flash, g, redirect, current_app, render_template, request, url_for, session
 from facebook import get_user_from_cookie, GraphAPI
 #from flask.ext.security import LoginForm, current_user, login_required, login_user
@@ -16,7 +17,8 @@ from models import Day
 @app.route('/')
 def index():
     events = db.session.query(Day) \
-        .filter(Day.priority >= 100) \
+        .filter(Day.date > datetime.today()) \
+        .filter(Day.priority > 50) \
         .order_by(Day.date).limit(10)
     years = range(datetime.today().year, datetime.today().year + 10)
     return render_template(_t('landing.html'), days=events, years=years)
@@ -35,8 +37,17 @@ def mdy(day, month, year):
 
 @app.route('/<day_name>')
 def event(day_name):
-    # TODO split year if exists
-    day = Day.query.get(day_name.lower())
+    if '.' in day_name:
+        return ""
+
+    # Year in url, easy
+    if re.search('-\d{4}', day_name[-5:]):
+        day = Day.query.get(day_name.lower())
+    # No year, pick next nearest by sys_name
+    else:
+        day = db.session.query(Day) \
+            .filter(Day.sys_name == str(day_name)) \
+            .filter(Day.date > datetime.today()).first()
     content = get_content(event=day)
     return render_template(_t('day.html'), c=content)
 

@@ -90,6 +90,11 @@ class Content(object):
         f = Fact.query.filter_by(date=d).first()
         return f.text
 
+    @property
+    def link(self):
+        if self.event:
+            return "<a href='%s'>%s</a>" % (self.event.link, self.event.link)
+
 
 def get_content(year=None, month=None, day=None, event=None):
     tz = timezone(session.get('tz', app.config['DEFAULT_TZ']))
@@ -113,6 +118,14 @@ def get_sitemap():
     s += "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n"
 
     # Data driven events
+    sys_names = set([d.sys_name for d in Day.query.all()])
+    for name in sys_names:
+        s += "\t<url>\n"
+        s += "\t\t<loc>http://%s/%s</loc>\n" % ('www.dayuntil.com', name)
+        s += "\t\t<changefreq>daily</changefreq>\n"
+        s += "\t</url>\n"
+
+    # TODO switch up loop to go by year, not day type to test SEO
     for d in Day.query.all():
         s += "\t<url>\n"
         s += "\t\t<loc>http://%s/%s</loc>\n" % ('www.dayuntil.com', d.id)

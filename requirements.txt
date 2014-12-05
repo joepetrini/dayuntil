@@ -40,7 +40,9 @@ requests-oauthlib==0.4.2
 rsa==3.1.4
 simplejson==3.6.5
 six==1.8.0
-sqlalchemy-migrate==0.9.2
+Flask-Migrate
+alembic
+Mako
 sqlparse==0.1.13
 uritemplate==0.6
 wsgiref==0.1.2
