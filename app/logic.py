@@ -10,11 +10,25 @@ from models import Day, Fact
 # Used by template to render all page content
 class Content(object):
     delta = None
+    rdelta = None
     event = None
     date = None
 
     def __init__(self, tz):
         self.tz = tz
+
+    @property
+    def day_info(self):
+        y, m, d = abs(self.rdelta.years), abs(self.rdelta.months), abs(self.rdelta.days)
+        yname = 'year' if y == 1 else 'years'
+        mname = 'month' if m == 1 else 'months'
+        dname = 'day' if d == 1 else 'days'
+
+        if y == 0 and m == 0:
+            return "%s %s" % (d, dname)
+        if y == 0:
+            return "%s %s and %s %s" % (m, mname, d, dname)
+        return "%s %s %s %s and %s %s" % (y, yname, m, mname, d, dname)
 
     @property
     def meta_keywords(self):
@@ -63,6 +77,21 @@ class Content(object):
                 return "Until %s" % self.date.strftime("%B %d %Y")
             else:
                 return "Since %s" % self.date.strftime("%B %d %Y")
+
+    @property
+    def dateinfo(self):
+        if self.event:
+            if self.delta.days > 0:
+                return "a %s " % (self.event.name, self.event.date.year)
+            else:
+                return "Since %s %s" % (self.event.name, self.event.date.year)
+        else:
+            if self.delta.days > 0:
+                return "Until %s" % self.date.strftime("%B %d %Y")
+            else:
+                return "Since %s" % self.date.strftime("%B %d %Y")
+
+
 
     @property
     def desc(self):

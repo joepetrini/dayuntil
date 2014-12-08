@@ -45,3 +45,7 @@ ADSENSE_TOP = """
 ADSENSE_MOB = """
                     FULL ADSENSE CODE HERE
               """
+
+ADSENSE_BOTTOM = """
+                    FULL ADSENSE CODE HERE
+                 """

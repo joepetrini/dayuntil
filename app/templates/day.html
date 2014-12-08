@@ -4,10 +4,11 @@
 {% block meta_kw %}{{ c.meta_keywords }}{% endblock %}
 
 {% block content %}
-
+  {% if g.ab %}
   <div class="tcenter" style="margin-top:5px">
-  {{ config.ADSENSE_TOP|safe }}
+    {{ config.ADSENSE_TOP|safe }}
   </div>
+  {% endif %}
 
   <div class="content">
 
@@ -15,6 +16,9 @@
       <div class="pure-u-1 tcenter">
         <h1>{{ c.heading }}</h1>
         <h2>{{ c.subheading }}</h2>
+        <div id="date-info">
+          a {{ c.date.strftime("%A") }} {{ c.day_info }} from today
+        </div>
         <p class="days-description">{{ c.desc }}</p>
         <!--<hr>
         Fact: {{ c.fact }}
@@ -31,5 +35,12 @@
     </div>
 
   </div>
+
+
+  {% if not g.ab %}
+  <div class="tcenter" style="margin-top:5px">
+    {{ config.ADSENSE_BOTTOM|safe }}
+  </div>
+  {% endif %}
 
 {% endblock %}

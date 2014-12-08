@@ -12,6 +12,6 @@ def _t(template_name):
 # Used for A/B testing
 def _ab(pct_split=50):
     if random.random() < (pct_split / 100.00):
-        return 'a'
+        return True#return 'a'
     else:
-        return 'b'
+        return False#return 'b'
