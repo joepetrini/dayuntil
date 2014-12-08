@@ -1,4 +1,4 @@
-{% extends '_base.html' %}
+{% extends '_mob_base.html' %}
 {% block title %}Days Until - How many days until or since a date{% endblock %}
 {% block meta_desc %}Find out how many days until a specified date{% endblock %}
 {% block meta_kw %}days until,calculate days until,how many days,how many days until,day calc tool,days until my birthday{% endblock %}
@@ -81,15 +81,15 @@
       <ul id="date-form">
         <li>
           mm<br>
-          <input id="mm" class="big big2" type="text" value="">
+          <input id="mm" class="big big2" type="text" value="" pattern="\d*">
         </li>
         <li>
           dd<br>
-          <input id="dd" class="big big2" type="text" value="">
+          <input id="dd" class="big big2" type="text" value="" pattern="\d*">
         </li>
         <li>
           yyyy<br>
-          <input id="yyyy" onfocus="this.value = this.value;" class="big big4" type="text" value="{{years.0}}">
+          <input id="yyyy" onfocus="this.value = this.value;" class="big big4" type="text" value="{{years.0}}" pattern="\d*">
         </li>
         <li>
           &nbsp;<br>
