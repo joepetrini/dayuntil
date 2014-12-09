@@ -54,6 +54,9 @@ class Day(db.Model, Timestamp):
     priority = db.Column(db.Integer(), default=0)
     view_count = db.Column(db.Integer(), default=0)
 
+    def add_view(self):
+        self.view_count += 1
+
 
 class Fact(db.Model, Timestamp):
     __tablename__ = "facts"

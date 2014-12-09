@@ -15,11 +15,15 @@
     <link href='//fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
 
     <link href="{{url_for('.static', filename='favicon.ico')}}" rel="icon" type="image/x-icon" />
-    <link rel="stylesheet" href="{{url_for('.static', filename='days-until.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('.static', filename='days-until.css')}}">
 
     <script src="{{url_for('.static', filename='timezone.js')}}"></script>
     <script src="{{url_for('.static', filename='jquery.js')}}"></script>
     <script src="{{url_for('.static', filename='days-until.js')}}"></script>
+
+    <!--[if lt IE 9]>
+        <script src="{{url_for('.static', filename='html5shiv.js')}}"></script>
+    <![endif]-->
 
     <script type="text/javascript">
       var s_tz = '{{ session.tz }}';
@@ -81,5 +85,15 @@
         };
     </script>
     {% include '_ga_tracking.html' %}
+
+    <div id="footer">
+      <div class="content">
+        <div class="pure-g">
+          <div class="pure-u-1 right">
+            <a href="/contact">contact</a>
+          </div>
+        </div>
+      </div>
+    </div>
 </body>
 </html>

@@ -2,6 +2,7 @@ import sys
 from werkzeug.utils import import_string
 from flask import Flask, redirect, url_for, session
 from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.mail import Mail
 from flask.ext.mobility import Mobility
 from flask_debugtoolbar import DebugToolbarExtension
 from flask.ext.migrate import Migrate
@@ -9,6 +10,8 @@ from flask.ext.migrate import Migrate
 version = "0.1"
 app = Flask(__name__)
 Mobility(app)
+mail = Mail(app)
+
 
 # Check config has all values in config_copy_me
 diff = set(dir(import_string('config_copyme'))) - set(dir(import_string('config')))

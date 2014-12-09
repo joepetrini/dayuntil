@@ -20,7 +20,22 @@ body {
     color: #555;
     font-size:20px;
     font-weight:400;
+    height: 100%;
+    margin-bottom:50px;
+    padding: 0;
 }
+#footer {
+    position: absolute;
+    bottom: 0;
+    height: 50px;
+    width: 100%;
+}
+
+#footer a, a:visited {
+    color: #0078e7;
+    text-decoration: none;
+}
+
 
 h1 {margin:0px;font-size:50px}
 

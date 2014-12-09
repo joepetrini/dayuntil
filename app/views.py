@@ -4,7 +4,7 @@ from flask import flash, g, redirect, current_app, render_template, request, url
 from facebook import get_user_from_cookie, GraphAPI
 #from flask.ext.security import LoginForm, current_user, login_required, login_user
 from app import app
-from helpers import _t, _ab
+from helpers import _t, _ab, email
 from logic import *
 from models import Day, User
 
@@ -35,6 +35,15 @@ def mdy(day, month, year):
     return render_template(_t('day.html'), c=content)
 
 
+@app.route('/contact', methods=['GET', 'POST'])
+def contact():
+    if request.method == 'POST':
+        email = request.form['email']
+        message = request.form['message']
+        
+    return render_template(_t('contact.html'))
+
+
 @app.route('/<day_name>')
 def event(day_name):
     if '.' in day_name:
@@ -49,6 +58,8 @@ def event(day_name):
             .filter(Day.sys_name == str(day_name)) \
             .filter(Day.date > datetime.today()).first()
     content = get_content(event=day)
+    day.add_view()
+    db.session.commit()
     return render_template(_t('day.html'), c=content)
 
 
