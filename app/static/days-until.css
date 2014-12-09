@@ -22,6 +22,8 @@ body {
     font-weight:400;
 }
 
+h1 {font-size:48px;}
+
 input.big {color: #555; text-align: center; margin-right:10px;}
 input.big2 {width:45px; font-size:30px;}
 input.big4 {width:90px; font-size:30px;}
