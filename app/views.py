@@ -38,10 +38,11 @@ def mdy(day, month, year):
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
     if request.method == 'POST':
-        email = request.form['email']
-        message = request.form['message']
-        
-    return render_template(_t('contact.html'))
+        name = request.form['email']
+        message = "%s - %s" % (name, request.form['message'])
+        email("Contact form submission", message)
+        success = True
+    return render_template(_t('contact.html'), success=success)
 
 
 @app.route('/<day_name>')

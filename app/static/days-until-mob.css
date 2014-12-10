@@ -10,10 +10,7 @@
 
 .center {margin: 0 auto;}
 .tcenter {text-align: center;}
-
-.right {
-    text-align: right;
-}
+.right {text-align: right;}
 
 body {
     font-family: 'Montserrat', sans-serif;
@@ -26,16 +23,13 @@ body {
 }
 #footer {
     position: absolute;
+    left: 0;
     bottom: 0;
-    height: 50px;
+    height: 30px;
     width: 100%;
+    background-color: #ddd;
+    border-top: 1px solid #666;
 }
-
-#footer a, a:visited {
-    color: #0078e7;
-    text-decoration: none;
-}
-
 
 h1 {margin:0px;font-size:50px}
 
@@ -85,4 +79,13 @@ a.event {
 #menu a:hover {
     color: #dfdfdf;
     text-decoration: none;
+}
+
+.success {
+    margin: 0 0.1em;
+    padding: 0.3em 1em;
+    color: #fff;
+    background: #999;
+    font-size: 80%;
+    background: #5aba59;
 }

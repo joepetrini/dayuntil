@@ -10,13 +10,17 @@
         <form method="post" action="" class="pure-form pure-form-stacked">
           <fieldset>
             <legend>Contact Us</legend>
-            <label for="from">Your Email</label>
-            <input type="text" name="email">
+            {% if success %}
+              <div class="success center">Thank you!</div>
+            {% else %}
+              <label for="from">Your Email</label>
+              <input type="text" name="email">
 
-            <label for="message">Message</label>
-            <textarea name="message" rows="10" cols="50"></textarea>
+              <label for="message">Message</label>
+              <textarea name="message" rows="10" cols="50"></textarea>
 
-            <input type="submit" value="Send" class="pure-button pure-button-primary">
+              <input type="submit" value="Send" class="pure-button pure-button-primary">
+            {% endif %}
           </fieldset>
         </form>
       </div>

@@ -3,7 +3,7 @@ import random
 from flask import request
 from flask.ext.mail import Message
 from app import app, mail
-from config import ADMINS
+from config import ADMINS, DEBUG
 
 
 
@@ -13,11 +13,14 @@ def _t(template_name):
     return template_name
 
 
-def email(subj, msg):
+def email(subj, content):
     msg = Message(subj, sender=ADMINS[0], recipients=ADMINS)
-    msg.body = msg
-    with app.app_context():
-        mail.send(msg)
+    msg.body = content
+    if DEBUG:
+        print "DEBUG: Email %s" % content
+    else:
+        with app.app_context():
+            mail.send(msg)
 
 
 # Used for A/B testing
