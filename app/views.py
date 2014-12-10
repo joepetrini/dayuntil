@@ -37,6 +37,7 @@ def mdy(day, month, year):
 
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
+    success = False
     if request.method == 'POST':
         name = request.form['email']
         message = "%s - %s" % (name, request.form['message'])

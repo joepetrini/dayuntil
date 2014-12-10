@@ -1,0 +1,31 @@
+{% extends '_mob_base.html' %}
+{% block title %}Contact DayUntil{% endblock %}
+{% block meta_desc %}Contact Dayuntil with suggestions{% endblock %}
+{% block meta_kw %}days until, contact us{% endblock %}
+
+{% block content %}
+  <div class="content">
+    <div class="pure-g">
+      <div class="pure-u-1">
+        <form method="post" action="" class="pure-form pure-form-stacked">
+          <fieldset>
+            <legend>Contact Us</legend>
+            {% if success %}
+              <div class="success center">Thank you!</div>
+            {% else %}
+              <label for="from">Your Email</label>
+              <input type="text" name="email">
+
+              <label for="message">Message</label>
+              <textarea name="message" rows="10" cols="25"></textarea>
+
+              <input type="submit" value="Send" class="pure-button pure-button-primary">
+            {% endif %}
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+{% endblock %}

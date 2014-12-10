@@ -79,13 +79,6 @@
   {% block content %} {% endblock %}
 
 
-    <script>
-        document.getElementById('logout').onclick = function() {
-            FB.logout(function(response) { });
-        };
-    </script>
-    {% include '_ga_tracking.html' %}
-
     <div id="footer">
       <div class="content">
         <div class="pure-g">
@@ -95,5 +88,13 @@
         </div>
       </div>
     </div>
+
+    <script>
+        document.getElementById('logout').onclick = function() {
+            FB.logout(function(response) { });
+        };
+    </script>
+    {% include '_ga_tracking.html' %}
+
 </body>
 </html>

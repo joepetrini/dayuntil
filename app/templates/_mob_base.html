@@ -15,6 +15,7 @@
     <link href='//fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
 
     <link href="{{url_for('.static', filename='favicon.ico')}}" rel="icon" type="image/x-icon" />
+    <link rel="stylesheet" href="{{url_for('.static', filename='days-until.css')}}">
     <link rel="stylesheet" href="{{url_for('.static', filename='days-until-mob.css')}}">
 
     <script src="{{url_for('.static', filename='timezone.js')}}"></script>
@@ -73,6 +74,16 @@
   </div>
 
   {% block content %} {% endblock %}
+
+    <div id="footer">
+      <div class="content">
+        <div class="pure-g">
+          <div class="pure-u-1 right">
+            <a href="/contact">contact</a>
+          </div>
+        </div>
+      </div>
+    </div>
 
 
     <script>
