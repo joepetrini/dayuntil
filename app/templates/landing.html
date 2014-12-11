@@ -1,10 +1,13 @@
-{% extends '_mob_base.html' %}
+{% extends '_base.html' %}
 {% block title %}Days Until - How many days until or since a date{% endblock %}
 {% block meta_desc %}Find out how many days until a specified date{% endblock %}
 {% block meta_kw %}days until,calculate days until,how many days,how many days until,day calc tool,days until my birthday{% endblock %}
 
 {% block head %}
   <script type="text/javascript">
+    var m_entered = false;
+    var d_entered = false;
+
     function submit(){
       var m = $('#mm').val();
       var d = $('#dd').val();
@@ -29,7 +32,6 @@
         valid = false;
       }
 
-      console.log(valid);
       if (valid){
         window.location = '/' + m + '/' + d + '/' + y;
       }
@@ -48,14 +50,16 @@
 
       $('#mm').keyup(function() {
         var m = $('#mm').val();
-        if (m.length > 1){
+        if (m.length > 1 && m_entered==false){
+          m_entered = true;
           $('#dd').focus();
         }
       });
 
       $('#dd').keyup(function() {
         var m = $('#dd').val();
-        if (m.length > 1){
+        if (m.length > 1 && d_entered==false){
+          d_entered = true;
           $('#yyyy').focus();
         }
       });
@@ -67,20 +71,22 @@
 <div class="content">
   <div class="pure-g" style="">
     <!--<div class="pure-u-2-5" style="vertical-align: bottom;padding-top:10px;"></div>-->
-    <div class="pure-u-1">
+    <div class="pure-u-1 pure-u-md-1-2 tcenter">
+        <h1>Days Until</h1>
+    </div>
+    <div class="pure-u-1 pure-u-md-1-2">
       <ul id="date-form">
-        <li style="margin-right:20px"><h1>Days Until</h1></li>
         <li>
           mm<br>
-          <input id="mm" class="big big2" type="text" value="">
+          <input id="mm" class="big big2" type="text" value="" pattern="\d*">
         </li>
         <li>
           dd<br>
-          <input id="dd" class="big big2" type="text" value="">
+          <input id="dd" class="big big2" type="text" value="" pattern="\d*">
         </li>
         <li>
           yyyy<br>
-          <input id="yyyy" onfocus="this.value = this.value;" class="big big4" type="text" value="{{years.0}}">
+          <input id="yyyy" onfocus="this.value = this.value;" class="big big4" type="text" value="{{years.0}}" pattern="\d*">
         </li>
         <li>
           &nbsp;<br>
@@ -89,7 +95,7 @@
       </ul>
     </div>
   </div>
-
+  <br>
   <!--
   <hr>
 
@@ -104,11 +110,11 @@
 
   <hr>
 
-  <div class="pure-g">
-    <div class="pure-u-1-6">
+  <div class="pure-g tcenter">
+    <div class="pure-u-1 pure-u-md-1-6">
       Upcoming Events
     </div>
-    <div class="pure-u-5-6">
+    <div class="pure-u-1 pure-u-md-5-6">
       {% for e in days %}
       <a title="Days Until {{ e.name }}" class="button-secondary pure-button event" href="/{{ e.id }}">{{ e.name }}</a>
       {% endfor %}

@@ -5,7 +5,7 @@
 
 {% block content %}
   {% if g.ab %}
-  <div class="tcenter" style="margin-top:5px">
+  <div class="tcenter content" style="margin-top:5px">
     {{ config.ADSENSE_TOP|safe }}
   </div>
   {% endif %}
@@ -14,12 +14,10 @@
   <div class="content">
     <div class="pure-g">
       <div class="pure-u-1 tcenter">
+
         <h1>{{m|capitalize}} Info</h1>
         <h2>Days in month: {{count}}</h2>
-        <div id="date-info">
-          {{m|capitalize}} is the {{mord}} month of the year
-        </div>
-        <br>
+        <h2>{{m|capitalize}} is the {{mord}} month of the year</h2>
 
         <hr>
 
@@ -35,7 +33,7 @@
         Month Info<br>
         {% for m in months %}
           {% if m != '' %}
-            <a title="Days in {{m|capitalize}}" class="button-secondary pure-button event" href="/{{m}}">{{m|capitalize}}</a>
+            <a title="Days in {{m|capitalize}}" class="button-secondary pure-button event" href="/month/{{m}}">{{m|capitalize}}</a>
           {% endif %}
         {% endfor %}
       </div>
@@ -43,7 +41,7 @@
   </div>
 
   {% if not g.ab %}
-  <div class="tcenter" style="margin-top:5px">
+  <div class="tcenter content" style="margin-top:5px">
     {{ config.ADSENSE_BOTTOM|safe }}
   </div>
   {% endif %}

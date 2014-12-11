@@ -8,13 +8,6 @@ from app import app, mail
 from config import ADMINS, DEBUG, MAIL_FROM
 
 
-
-def _t(template_name):
-    if request.MOBILE:
-        return "mob_%s" % template_name
-    return template_name
-
-
 def months_dict(capitalize=False):
     if capitalize:
         return OrderedDict((v, k) for k, v in enumerate(calendar.month_name))

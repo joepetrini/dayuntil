@@ -4,7 +4,7 @@ from flask import flash, g, redirect, current_app, render_template, request, url
 from facebook import get_user_from_cookie, GraphAPI
 #from flask.ext.security import LoginForm, current_user, login_required, login_user
 from app import app
-from helpers import _t, _ab, email, ordinal
+from helpers import _ab, email, ordinal
 from logic import *
 from models import Day, User
 
@@ -21,7 +21,7 @@ def index():
         .filter(Day.priority > 50) \
         .order_by(Day.date).limit(10)
     years = range(datetime.today().year, datetime.today().year + 10)
-    return render_template(_t('landing.html'), days=events, years=years)
+    return render_template('landing.html', days=events, years=years)
 
 
 @app.route('/sitemap.xml')
@@ -32,7 +32,7 @@ def sitemap():
 @app.route('/<month>/<day>/<year>')
 def mdy(day, month, year):
     content = get_content(year=year, month=month, day=day)
-    return render_template(_t('day.html'), c=content)
+    return render_template('day.html', c=content)
 
 
 @app.route('/contact', methods=['GET', 'POST'])
@@ -43,7 +43,7 @@ def contact():
         message = "%s - %s" % (name, request.form['message'])
         email("Contact form submission", message)
         success = True
-    return render_template(_t('contact.html'), success=success)
+    return render_template('contact.html', success=success)
 
 
 @app.route('/month/<month_name>')
@@ -55,7 +55,7 @@ def month(month_name):
     days = db.session.query(Day) \
         .filter(Day.date > datetime.today()) \
         .filter(Day.date < datetime.today() + timedelta(days=365))
-    return render_template(_t('month.html'), m=month_name, days=days, count=day_count, month=mnum, mord=mord, months=months)
+    return render_template('month.html', m=month_name, days=days, count=day_count, month=mnum, mord=mord, months=months)
 
 
 @app.route('/<day_name>')
@@ -76,7 +76,7 @@ def event(day_name):
     content = get_content(event=day)
     day.add_view()
     db.session.commit()
-    return render_template(_t('day.html'), c=content)
+    return render_template('day.html', c=content)
 
 
 @app.route('/api/timezone')

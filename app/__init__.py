@@ -3,15 +3,15 @@ from werkzeug.utils import import_string
 from flask import Flask, redirect, url_for, session
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.mail import Mail
-from flask.ext.mobility import Mobility
+#from flask.ext.mobility import Mobility
 from flask_debugtoolbar import DebugToolbarExtension
 from flask.ext.migrate import Migrate
 
 # Version number, used to ensure assets are up to date
-VERSION = '3'
+VERSION = '4'
 
 app = Flask(__name__)
-Mobility(app)
+#Mobility(app)
 mail = Mail(app)
 
 

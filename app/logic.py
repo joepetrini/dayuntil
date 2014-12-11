@@ -118,7 +118,7 @@ class Content(object):
     def nearby_events(self):
         return db.session.query(Day) \
             .filter(Day.date > self.date) \
-            .order_by(Day.date).limit(5)
+            .order_by(Day.date).limit(9)
 
     @property
     def fact(self):
@@ -159,8 +159,6 @@ def get_sitemap():
         s += "\t\t<loc>%s/month/%s</loc>\n" % (app.config['SITE_URL'], m)
         s += "\t\t<changefreq>monthly</changefreq>\n"
         s += "\t</url>\n"
-
-    return s
 
     # Data driven events
     sys_names = set([d.sys_name for d in Day.query.all()])

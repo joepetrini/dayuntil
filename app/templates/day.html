@@ -5,7 +5,7 @@
 
 {% block content %}
   {% if g.ab %}
-  <div class="tcenter" style="margin-top:5px">
+  <div class="tcenter content" style="margin-top:5px">
     {{ config.ADSENSE_TOP|safe }}
   </div>
   {% endif %}
@@ -14,31 +14,38 @@
 
     <div class="pure-g">
       <div class="pure-u-1 tcenter">
-        <h1>{{ c.heading }}</h1>
-        <h2>{{ c.subheading }}</h2>
-        <div id="date-info">
-          a {{ c.date.strftime("%A") }} {{ c.day_info }} from today
-        </div>
-        <p class="days-description">{{ c.desc|safe }}</p>
+        <h1>{{ c.heading }} {{ c.subheading }}</h1>
+        <h2>a {{ c.date.strftime("%A") }} {{ c.day_info }} from today</h2>
+        {% if c.event %}
+          <p class="days-description">{{ c.desc|safe }}</p>
+        {% else %}
+          <h2>{{ c.desc|safe }}</h2>
+        {% endif %}
+
         <!--<hr>
         Fact: {{ c.fact }}
         -->
         <hr>
-        Days Until:
-        {% for e in c.nearby_events %}
-          <span style="white-space: nowrap;">
-            <a title="Days Until {{ e.name }}" class="button-secondary pure-button event" href="/{{ e.id }}">{{ e.name }}</a>
-          </span>
-        {% endfor %}
 
+        <div class="pure-g tcenter">
+          <div class="pure-u-1 pure-u-md-1-6">
+            Days Until:
+          </div>
+          <div class="pure-u-1 pure-u-md-5-6">
+            {% for e in c.nearby_events %}
+              <span style="white-space: nowrap;">
+                <a title="Days Until {{ e.name }}" class="button-secondary pure-button event" href="/{{ e.id }}">{{ e.name }}</a>
+              </span>
+            {% endfor %}
+          </div>
+        </div>
       </div>
     </div>
-
   </div>
 
 
   {% if not g.ab %}
-  <div class="tcenter" style="margin-top:5px">
+  <div class="tcenter content" style="margin-top:5px">
     {{ config.ADSENSE_BOTTOM|safe }}
   </div>
   {% endif %}
