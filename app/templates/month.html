@@ -1,0 +1,52 @@
+{% extends '_base.html' %}
+{% block title %}Days in {{m|capitalize}} and other statistics{% endblock %}
+{% block meta_desc %}Fact and stats about the month of {{m|capitalize}}.{% endblock %}
+{% block meta_kw %}days in {{m|capitalize}}, facts about {{m|capitalize}}, {{m|capitalize}} events, {{m|capitalize}} holidays{% endblock %}
+
+{% block content %}
+  {% if g.ab %}
+  <div class="tcenter" style="margin-top:5px">
+    {{ config.ADSENSE_TOP|safe }}
+  </div>
+  {% endif %}
+
+
+  <div class="content">
+    <div class="pure-g">
+      <div class="pure-u-1 tcenter">
+        <h1>{{m|capitalize}} Info</h1>
+        <h2>Days in month: {{count}}</h2>
+        <div id="date-info">
+          {{m|capitalize}} is the {{mord}} month of the year
+        </div>
+        <br>
+
+        <hr>
+
+        Events in {{m|capitalize}}<br>
+        {% for d in days %}
+          {% if d.date.month == month %}
+            <span style="white-space: nowrap;">
+              <a title="Days Until {{ d.name }}" class="button-secondary pure-button event" href="/{{ d.id }}">{{ d.name }}</a>
+            </span>
+          {% endif %}
+        {% endfor %}
+        <br><hr>
+        Month Info<br>
+        {% for m in months %}
+          {% if m != '' %}
+            <a title="Days in {{m|capitalize}}" class="button-secondary pure-button event" href="/{{m}}">{{m|capitalize}}</a>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  {% if not g.ab %}
+  <div class="tcenter" style="margin-top:5px">
+    {{ config.ADSENSE_BOTTOM|safe }}
+  </div>
+  {% endif %}
+
+
+{% endblock %}

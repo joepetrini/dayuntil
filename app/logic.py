@@ -150,14 +150,14 @@ def get_sitemap():
     sys_names = set([d.sys_name for d in Day.query.all()])
     for name in sys_names:
         s += "\t<url>\n"
-        s += "\t\t<loc>http://%s/%s</loc>\n" % ('www.dayuntil.com', name)
-        s += "\t\t<changefreq>daily</changefreq>\n"
+        s += "\t\t<loc>%s/%s</loc>\n" % (app.config['SITE_URL'], name)
+        s += "\t\t<changefreq>weekly</changefreq>\n"
         s += "\t</url>\n"
 
     # TODO switch up loop to go by year, not day type to test SEO
     for d in Day.query.all():
         s += "\t<url>\n"
-        s += "\t\t<loc>http://%s/%s</loc>\n" % ('www.dayuntil.com', d.id)
+        s += "\t\t<loc>%s/%s</loc>\n" % (app.config['SITE_URL'], d.id)
         s += "\t\t<changefreq>daily</changefreq>\n"
         s += "\t</url>\n"
 
@@ -168,7 +168,7 @@ def get_sitemap():
         d = now + timedelta(days=i)
         ds = "%02d/%02d/%s" % (d.month, d.day, d.year)
         s += "\t<url>\n"
-        s += "\t\t<loc>http://%s/%s</loc>\n" % ('www.dayuntil.com', ds)
+        s += "\t\t<loc>%s/%s</loc>\n" % (app.config['SITE_URL'], ds)
         s += "\t\t<changefreq>daily</changefreq>\n"
         s += "\t</url>\n"
 

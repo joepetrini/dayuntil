@@ -27,7 +27,7 @@
         Days Until:
         {% for e in c.nearby_events %}
           <span style="white-space: nowrap;">
-            <a class="button-secondary pure-button event" href="/{{ e.id }}">{{ e.name }}</a>
+            <a title="Days Until {{ e.name }}" class="button-secondary pure-button event" href="/{{ e.id }}">{{ e.name }}</a>
           </span>
         {% endfor %}
 

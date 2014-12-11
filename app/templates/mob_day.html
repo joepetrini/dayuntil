@@ -4,11 +4,7 @@
 {% block meta_kw %}{{ c.meta_keywords }}{% endblock %}
 
 {% block content %}
-  {% if request.MOBILE %}
-    {{ config.ADSENSE_MOB|safe }}
-  {% else %}
-    {{ config.ADSENSE_TOP|safe }}
-  {% endif %}
+  {{ config.ADSENSE_MOB|safe }}
 
   <div class="content">
     <div class="pure-g">
@@ -27,7 +23,7 @@
         Days Until:<br>
         {% for e in c.nearby_events %}
           <span style="white-space: nowrap;">
-            <a class="button-secondary pure-button event" href="/{{ e.id }}">{{ e.name }}</a>
+            <a title="Days Until {{ e.name }}" class="button-secondary pure-button event" href="/{{ e.id }}">{{ e.name }}</a>
           </span>
         {% endfor %}
 

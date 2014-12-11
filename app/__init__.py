@@ -7,7 +7,9 @@ from flask.ext.mobility import Mobility
 from flask_debugtoolbar import DebugToolbarExtension
 from flask.ext.migrate import Migrate
 
-version = "0.1"
+# Version number, used to ensure assets are up to date
+VERSION = '2'
+
 app = Flask(__name__)
 Mobility(app)
 mail = Mail(app)
@@ -20,6 +22,7 @@ if len(diff) > 0:
     sys.exit(0)
 
 app.config.from_object('config')
+app.config['VERSION'] = VERSION
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)

@@ -117,7 +117,7 @@
     <div class="pure-g">
       <div class="pure-u-1">
         {% for e in days %}
-        <a class="button-secondary pure-button event" href="/{{ e.id }}">{{ e.name }}</a>
+        <a title="Days Until {{ e.name }}" class="button-secondary pure-button event" href="/{{ e.id }}">{{ e.name }}</a>
         {% endfor %}
       </div>
     </div>

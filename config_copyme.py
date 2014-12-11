@@ -4,6 +4,9 @@ DEBUG = True
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
+# No traililng slash
+SITE_URL = "http://www.mydomain.com"
+
 PERMANENT_SESSION_LIFETIME = 31536000
 DEFAULT_TZ = 'America/Chicago'
 
@@ -30,6 +33,7 @@ MAIL_SERVER = 'your.mailserver.com'
 MAIL_PORT = 25
 #MAIL_USERNAME = None
 #MAIL_PASSWORD = None
+MAIL_FROM = 'noreply@yourdomain.com'
 
 # administrator list
 ADMINS = ['you@example.com']

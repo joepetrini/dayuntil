@@ -1,10 +1,12 @@
 import datetime
 import re
+from collections import OrderedDict
+import calendar
 from flask import flash, g, redirect, current_app, render_template, request, url_for, session
 from facebook import get_user_from_cookie, GraphAPI
 #from flask.ext.security import LoginForm, current_user, login_required, login_user
 from app import app
-from helpers import _t, _ab, email
+from helpers import _t, _ab, email, ordinal
 from logic import *
 from models import Day, User
 
@@ -46,6 +48,18 @@ def contact():
     return render_template(_t('contact.html'), success=success)
 
 
+@app.route('/month/<month_name>')
+def month(month_name):
+    months = OrderedDict((str(v).lower(), k) for k, v in enumerate(calendar.month_name))
+    mnum = months[month_name.lower()]
+    mord = ordinal(mnum)
+    day_count = calendar.monthrange(2000, mnum)[1]
+    days = db.session.query(Day) \
+        .filter(Day.date > datetime.today()) \
+        .filter(Day.date < datetime.today() + timedelta(days=365))
+    return render_template(_t('month.html'), m=month_name, days=days, count=day_count, month=mnum, mord=mord, months=months)
+
+
 @app.route('/<day_name>')
 def event(day_name):
     if '.' in day_name:
@@ -53,6 +67,8 @@ def event(day_name):
 
     # Year in url, easy
     if re.search('-\d{4}', day_name[-5:]):
+        #m = re.search('([^\d]+)(\d{4})', day_name)
+        print day_name
         day = Day.query.get(day_name.lower())
     # No year, pick next nearest by sys_name
     else:
