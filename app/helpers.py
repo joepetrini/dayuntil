@@ -1,5 +1,7 @@
 from datetime import datetime
 import random
+import calendar
+from collections import OrderedDict
 from flask import request
 from flask.ext.mail import Message
 from app import app, mail
@@ -11,6 +13,13 @@ def _t(template_name):
     if request.MOBILE:
         return "mob_%s" % template_name
     return template_name
+
+
+def months_dict(capitalize=False):
+    if capitalize:
+        return OrderedDict((v, k) for k, v in enumerate(calendar.month_name))
+    else:
+        return OrderedDict((str(v).lower(), k) for k, v in enumerate(calendar.month_name))
 
 
 def ordinal(num):

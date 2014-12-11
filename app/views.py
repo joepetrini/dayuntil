@@ -1,7 +1,5 @@
 import datetime
 import re
-from collections import OrderedDict
-import calendar
 from flask import flash, g, redirect, current_app, render_template, request, url_for, session
 from facebook import get_user_from_cookie, GraphAPI
 #from flask.ext.security import LoginForm, current_user, login_required, login_user
@@ -50,7 +48,7 @@ def contact():
 
 @app.route('/month/<month_name>')
 def month(month_name):
-    months = OrderedDict((str(v).lower(), k) for k, v in enumerate(calendar.month_name))
+    months = months_dict()
     mnum = months[month_name.lower()]
     mord = ordinal(mnum)
     day_count = calendar.monthrange(2000, mnum)[1]
@@ -120,7 +118,7 @@ def get_current_user():
     if session.get('user'):
         # TODO query for user
         g.user = session.get('user')
-        print "user in session %s" % g.user
+        #print "user in session %s" % g.user
         return
 
 

@@ -19,16 +19,17 @@ body {
     font-weight:400;
     height: 100%;
     margin-bottom: 30px;
+    padding: 0px;
 }
 
 #footer {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    height: 30px;
-    width: 100%;
-    background-color: #ddd;
-    border-top: 1px solid #666;
+   position:fixed;
+   left:0px;
+   bottom:0px;
+   height:30px;
+   width:100%;
+   background-color: #ddd;
+   border-top: 1px solid #666;
 }
 
 h1 {font-size:48px;}

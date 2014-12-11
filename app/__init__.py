@@ -8,7 +8,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 from flask.ext.migrate import Migrate
 
 # Version number, used to ensure assets are up to date
-VERSION = '2'
+VERSION = '3'
 
 app = Flask(__name__)
 Mobility(app)

@@ -19,7 +19,7 @@
         <div id="date-info">
           a {{ c.date.strftime("%A") }} {{ c.day_info }} from today
         </div>
-        <p class="days-description">{{ c.desc }}</p>
+        <p class="days-description">{{ c.desc|safe }}</p>
         <!--<hr>
         Fact: {{ c.fact }}
         -->

@@ -1,10 +1,11 @@
+import re
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 from pytz import timezone
-import redis
 from flask import request, session
 from app import app, db
 from models import Day, Fact
+from helpers import *
 
 
 # Used by template to render all page content
@@ -96,7 +97,13 @@ class Content(object):
     @property
     def desc(self):
         if self.event:
-            return self.event.desc
+            # Replace month names with links to month info page
+            s = str(self.event.desc)
+            months = months_dict(capitalize=True)
+            for m in list(months)[1:]:
+                link = '<a href="/month/%s" title="How Many Days in %s">%s</a>' % (m.lower(), m, m)
+                s = re.sub(m, link, s)
+            return s
         else:
             return ""
             #return "A %s" % (self.date.strftime("%A"), self.delta.months
@@ -146,6 +153,15 @@ def get_sitemap():
     s = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
     s += "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n"
 
+    # Month specific info
+    for m in list(months_dict())[1:]:
+        s += "\t<url>\n"
+        s += "\t\t<loc>%s/month/%s</loc>\n" % (app.config['SITE_URL'], m)
+        s += "\t\t<changefreq>monthly</changefreq>\n"
+        s += "\t</url>\n"
+
+    return s
+
     # Data driven events
     sys_names = set([d.sys_name for d in Day.query.all()])
     for name in sys_names:
@@ -160,7 +176,6 @@ def get_sitemap():
         s += "\t\t<loc>%s/%s</loc>\n" % (app.config['SITE_URL'], d.id)
         s += "\t\t<changefreq>daily</changefreq>\n"
         s += "\t</url>\n"
-
 
     # Go 3 years into the future for regular dates
     now = datetime.today() - timedelta(days=180)
