@@ -10,8 +10,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta property="fb:app_id" content="{{ config.FB_APP_ID }}" />
 
-    <link rel="apple-touch-icon" href="/static/apple-touch-icon.png">
-    <link href="/static/favicon.ico" rel="icon" type="image/x-icon" />
+    {% include '_icons.html' %}
+
     <link href='//fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
 
     <link href="{{url_for('.static', filename='favicon.ico')}}" rel="icon" type="image/x-icon" />

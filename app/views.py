@@ -29,7 +29,7 @@ def sitemap():
     return get_sitemap()
 
 
-@app.route('/<month>/<day>/<year>')
+@app.route('/<int:month>/<int:day>/<int:year>')
 def mdy(day, month, year):
     content = get_content(year=year, month=month, day=day)
     return render_template('day.html', c=content)

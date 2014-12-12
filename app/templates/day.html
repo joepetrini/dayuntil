@@ -5,7 +5,7 @@
 
 {% block content %}
   {% if g.ab %}
-  <div class="tcenter content" style="margin-top:5px">
+  <div class="tcenter content adunit" style="margin-top:5px">
     {{ config.ADSENSE_TOP|safe }}
   </div>
   {% endif %}
@@ -45,7 +45,7 @@
 
 
   {% if not g.ab %}
-  <div class="tcenter content" style="margin-top:5px">
+  <div class="tcenter content adunit" style="margin-top:5px">
     {{ config.ADSENSE_BOTTOM|safe }}
   </div>
   {% endif %}
