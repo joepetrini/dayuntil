@@ -4,7 +4,7 @@ from dateutil.relativedelta import relativedelta
 from pytz import timezone
 from flask import request, session
 from app import app, db
-from models import Day, Fact
+from models import Day, Fact, UserDay
 from helpers import *
 
 
@@ -18,66 +18,17 @@ class Content(object):
     def __init__(self, tz):
         self.tz = tz
 
-    @property
-    def day_info(self):
-        y, m, d = abs(self.rdelta.years), abs(self.rdelta.months), abs(self.rdelta.days)
-        yname = 'year' if y == 1 else 'years'
-        mname = 'month' if m == 1 else 'months'
-        dname = 'day' if d == 1 else 'days'
+    @staticmethod
+    def linkify(s):
+            print "linkify %s" % s
+            # Replace month names with links to month info page
+            s = str(s)
+            months = months_dict(capitalize=True)
+            for m in list(months)[1:]:
+                link = '<a href="/month/%s" title="How Many Days in %s">%s</a>' % (m.lower(), m, m)
+                s = re.sub(m, link, s)
+            return s
 
-        if y == 0 and m == 0:
-            return "%s %s" % (d, dname)
-        if y == 0:
-            return "%s %s and %s %s" % (m, mname, d, dname)
-        return "%s %s %s %s and %s %s" % (y, yname, m, mname, d, dname)
-
-    @property
-    def meta_keywords(self):
-        if self.event:
-            kw = "Days until %s %s, " % (self.event.name, self.date.year)
-            kw += "Countdown until %s %s, " % (self.event.name, self.date.year)
-            kw += "days until, how many days, how much time"
-        else:
-            kw = "Days until %s, " % self.date.strftime("%A %B %d %Y")
-            kw += "Countdown until %s, " % self.date.strftime("%A %B %d %Y")
-            kw += "days until, how many days, hours until, date calculator"
-        return kw
-
-    @property
-    def meta_desc(self):
-        if self.event:
-            d = "Days until %s %s. " % (self.event.name, self.date.year)
-            d += "Countdown until %s %s. " % (self.event.name, self.date.year)
-            d += "DayUntil - Find out how many days left"
-        else:
-            d = "Days until %s. " % self.date.strftime("%A %B %d %Y")
-            d += "Countdown until %s. " % self.date.strftime("%A %B %d %Y")
-            d += "DayUntil - Find out how many days left"
-        return d
-
-    @property
-    def title(self):
-        if self.event:
-            return "Days until %s %s" % (self.event.name, self.event.date.year)
-        else:
-            return "Days until %s" % self.date.strftime("%A %B %Y")
-
-    @property
-    def heading(self):
-        return "%s days" % abs(self.delta.days)
-
-    @property
-    def subheading(self):
-        if self.event:
-            if self.delta.days > 0:
-                return "Until %s %s" % (self.event.name, self.event.date.year)
-            else:
-                return "Since %s %s" % (self.event.name, self.event.date.year)
-        else:
-            if self.delta.days > 0:
-                return "Until %s" % self.date.strftime("%B %d %Y")
-            else:
-                return "Since %s" % self.date.strftime("%B %d %Y")
 
     @property
     def dateinfo(self):
@@ -93,20 +44,77 @@ class Content(object):
                 return "Since %s" % self.date.strftime("%B %d %Y")
 
 
+    @property
+    def day_info(self):
+        y, m, d = abs(self.rdelta.years), abs(self.rdelta.months), abs(self.rdelta.days)
+        yname = 'year' if y == 1 else 'years'
+        mname = 'month' if m == 1 else 'months'
+        dname = 'day' if d == 1 else 'days'
+
+        if y == 0 and m == 0:
+            return "%s %s" % (d, dname)
+        if y == 0:
+            return "%s %s and %s %s" % (m, mname, d, dname)
+        return "%s %s %s %s and %s %s" % (y, yname, m, mname, d, dname)
+
 
     @property
     def desc(self):
         if self.event:
             # Replace month names with links to month info page
-            s = str(self.event.desc)
-            months = months_dict(capitalize=True)
-            for m in list(months)[1:]:
-                link = '<a href="/month/%s" title="How Many Days in %s">%s</a>' % (m.lower(), m, m)
-                s = re.sub(m, link, s)
-            return s
+            return self.linkify(self.event.desc)
         else:
             return ""
             #return "A %s" % (self.date.strftime("%A"), self.delta.months
+
+
+    @property
+    def fact(self):
+        d = datetime(2000, self.date.month, self.date.day)
+        f = Fact.query.filter_by(date=d).first()
+        return f.text
+
+
+    @property
+    def heading(self):
+        return "%s days" % abs(self.delta.days)
+
+
+    @property
+    def link(self):
+        if self.event:
+            return "<a href='%s'>%s</a>" % (self.event.link, self.event.link)
+
+
+    @property
+    def meta_keywords(self):
+        if self.event:
+            kw = "Days until %s %s, " % (self.event.name, self.date.year)
+            kw += "when is %s, " % (self.event.name)
+            kw += "Countdown until %s %s, " % (self.event.name, self.date.year)
+            kw += "days until, how many days, how much time"
+        else:
+            kw = "Days until %s, " % self.date.strftime("%A %B %d %Y")
+            kw += "When is %s, " % self.date.strftime("%A %B %d %Y")
+            kw += "Countdown until %s, " % self.date.strftime("%A %B %d %Y")
+            kw += "days until, how many days, hours until, date calculator"
+        return kw
+
+    @property
+    def meta_desc(self):
+        if self.event:
+            if self.show_year:
+                d = "Days until %s %s. " % (self.event.name, self.date.year)
+            else:
+                d = "Days until next %s. " % (self.event.name)
+            d += "Countdown until %s %s. " % (self.event.name, self.date.year)
+            d += "DayUntil - Find out how many days left"
+        else:
+            d = "Days until %s. " % self.date.strftime("%A %B %d %Y")
+            d += "Countdown until %s. " % self.date.strftime("%A %B %d %Y")
+            d += "DayUntil - Find out how many days left"
+        return d
+
 
     @property
     def months(self):
@@ -120,22 +128,79 @@ class Content(object):
             .filter(Day.date > self.date) \
             .order_by(Day.date).limit(9)
 
-    @property
-    def fact(self):
-        d = datetime(2000, self.date.month, self.date.day)
-        f = Fact.query.filter_by(date=d).first()
-        return f.text
 
     @property
-    def link(self):
+    def subheading(self):
         if self.event:
-            return "<a href='%s'>%s</a>" % (self.event.link, self.event.link)
+            if self.delta.days > 0:
+                return "Until %s of %s" % (self.event.name, self.event.date.year)
+            else:
+                return "Since %s of %s" % (self.event.name, self.event.date.year)
+        else:
+            if self.delta.days > 0:
+                return self.linkify("Until %s" % self.date.strftime("%B %d %Y"))
+            else:
+                return self.linkify("Since %s" % self.date.strftime("%B %d %Y"))
 
 
-def get_content(year=None, month=None, day=None, event=None):
+    @property
+    def title(self):
+        if self.event:
+            if self.show_year:
+                return "Days until %s %s" % (self.event.name, self.event.date.year)
+            else:
+                return "Days until next %s" % (self.event.name)
+        else:
+            return "Days until %s" % self.date.strftime("%A %B %Y")
+
+
+    @property
+    def userdays(self):
+        date = str(self.date.strftime("%Y%m%d"))
+
+        day = db.session.query(UserDay) \
+            .filter(UserDay.user == self.user) \
+            .filter(UserDay.date == date).first()
+
+        return day
+
+
+    @property
+    def weekdays(self):
+        d = 0
+        if self.date > self.l_now:
+            for i in range(0, self.delta.days):
+                if (self.l_now + timedelta(days=i+1)).weekday() < 5:
+                    d += 1
+        else:
+            for i in range(0, abs(self.delta.days)):
+                if (self.l_now - timedelta(days=i-1)).weekday() < 5:
+                    d -= 1
+        return int(d)
+
+
+    @property
+    def ymd(self):
+        return self.date.strftime("%Y%m%d")
+
+
+    @property
+    def zodiac(self):
+        zodiacs = [(120, 'Capricorn'), (218, 'Aquarius'), (320, 'Pisces'), (420, 'Aries'), (521, 'Taurus'),
+                   (621, 'Gemini'), (722, 'Cancer'), (823, 'Leo'), (923, 'Virgo'), (1023, 'Libra'),
+                   (1122, 'Scorpio'), (1222, 'Sagittarius'), (1231, 'Capricorn')]
+        date_number = int(str(self.date.month) + '%02d' % self.date.day)
+        for z in zodiacs:
+            if date_number < z[0]:
+                return '<a href="http://www.ganeshaspeaks.com/%s.action">%s</a>' % (z[1], z[1])
+
+
+def get_content(year=None, month=None, day=None, event=None, user=None, show_year=True):
     tz = timezone(session.get('tz', app.config['DEFAULT_TZ']))
     c = Content(tz)
-    l_now = tz.localize(datetime.now())
+    c.user = user
+    c.show_year = show_year
+    c.l_now = tz.localize(datetime.now())
     # DMY based
     if year is not None:
         l_date = tz.localize(datetime(int(year), int(month), int(day), 0, 0, 0))
@@ -143,8 +208,8 @@ def get_content(year=None, month=None, day=None, event=None):
     if event is not None:
         l_date = tz.localize(event.date)
     c.date = l_date
-    c.rdelta = relativedelta(l_date, l_now)
-    c.delta = l_date - l_now
+    c.rdelta = relativedelta(l_date, c.l_now)
+    c.delta = l_date - c.l_now
     c.event = event
     return c
 

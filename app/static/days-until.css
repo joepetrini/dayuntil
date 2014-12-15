@@ -12,6 +12,36 @@ body {
     color: #555;
 }
 
+h1 a{
+    color: #0078e7;
+}
+.strip {
+    background-color: #f6f6f6;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    width: 100%;
+    padding: 10px;
+    margin: 15px 0 15px 0;
+}
+.strip .fb-login-button {
+    line-height: 1.5em;
+}
+
+.saved-day {
+    color: #060;
+    background-color: #B4E8B7;
+}
+.saved-day strong {
+    font-size: 1.2em;
+}
+.saved-day input.pure-button{
+    color: #060;
+    border: 1px solid #5a5;
+    background-color: #B9EFBA;
+    padding: 3px 8px 3px 8px;
+    line-height: 1.2em;
+}
+
 /* Specific classes */
 .content {
     margin-left: auto;
@@ -21,13 +51,24 @@ body {
     max-width: 768px;
 }
 
+.info-wrap {
+    float: left;
+    margin:10px;
+}
+
+.info-wrap p{
+    border: 1px solid #dfdfdf;
+    padding: 10px;
+    margin-left: -1px;
+    float: left;
+}
 
 body {
     font-family: 'Montserrat', sans-serif;
     /*color: #555;*/
     font-weight:400;
     height: 100%;
-    margin-bottom: 25px;
+    margin-bottom: 40px;
     padding: 0px;
 }
 
@@ -36,10 +77,11 @@ body {
    left:0px;
    bottom:0px;
    width:100%;
-   background-color: #ddd;
-   border-top: 1px solid #666;
-   height:25px;
+   background-color: #f6f6f6;
+   border-top: 1px solid #ccc;
+   height:40px;
    padding-top:6px;
+   line-height: 2.4em;
 }
 
 h1 {font-size:48px;}
@@ -65,9 +107,9 @@ a.event {
 }
 
 #menu {
-    background-color: #191818;
+    background-color: #282828;
     border-bottom:1px solid #dfdfdf;
-    color:#bbb;
+    color:#ddd;
     padding:10px;
 }
 
@@ -104,11 +146,12 @@ a.event {
 
 
 /* Responsive sizing 35.5, 48, 64, 80 */
-body    { font-size:1em; }
-h1      { font-size:2em; }
-h2      { font-size:1.5em; }
-input   { font-size:1.5em; }
-p       { font-size:1.2em; }
+body    { font-size: 1em; }
+h1      { font-size: 2em; }
+h2      { font-size: 1.5em; }
+/*input   { font-size:1.5em; }*/
+p       { font-size: 1.2em; }
+span.days-till { font-size: 2em; display:block; margin-bottom: .2em  }
 
 @media screen and (min-width:3.5em) and (max-width: 48em) {
     body    {
@@ -119,6 +162,6 @@ p       { font-size:1.2em; }
     h2      { font-size:1.5em; }
     input   { font-size:1.5em; }
     p       { font-size:1.2em; }
-    #footer { height:30px; }
+    #footer { line-height:30px; }
     .adunit { max-width: 400px; }
 }

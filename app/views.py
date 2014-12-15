@@ -6,7 +6,7 @@ from facebook import get_user_from_cookie, GraphAPI
 from app import app
 from helpers import _ab, email, ordinal
 from logic import *
-from models import Day, User
+from models import Day, User, UserDay
 
 
 #@app.context_processor
@@ -29,9 +29,42 @@ def sitemap():
     return get_sitemap()
 
 
+@app.route('/api/add', methods=['POST'])
+def add_day():
+    if not g.user:
+        return "ERROR"
+    name = request.form['name']
+    date = request.form['date']
+    d = UserDay(name=name, date=date, user=g.user)
+    db.session.add(d)
+    db.session.commit()
+    return render_template('_userday.html', day=d)
+
+
+@app.route('/api/remove', methods=['POST'])
+def remove_day():
+    if not g.user:
+        return "ERROR"
+    date = request.form['date']
+    day = db.session.query(UserDay) \
+        .filter(UserDay.user == g.user) \
+        .filter(UserDay.date == date).first()
+    db.session.delete(day)
+    db.session.commit()
+    return ''
+
+
+@app.route('/admin')
+def admin():
+    if g.user['admin']:
+        users = User.query.all()
+        return render_template('admin.html', users=users)
+    return ''
+
+
 @app.route('/<int:month>/<int:day>/<int:year>')
 def mdy(day, month, year):
-    content = get_content(year=year, month=month, day=day)
+    content = get_content(year=year, month=month, day=day, user=g.user)
     return render_template('day.html', c=content)
 
 
@@ -62,7 +95,7 @@ def month(month_name):
 def event(day_name):
     if '.' in day_name:
         return ""
-
+    show_year = True
     # Year in url, easy
     if re.search('-\d{4}', day_name[-5:]):
         #m = re.search('([^\d]+)(\d{4})', day_name)
@@ -73,7 +106,8 @@ def event(day_name):
         day = db.session.query(Day) \
             .filter(Day.sys_name == str(day_name)) \
             .filter(Day.date > datetime.today()).first()
-    content = get_content(event=day)
+        show_year = False
+    content = get_content(event=day, show_year=show_year)
     day.add_view()
     db.session.commit()
     return render_template('day.html', c=content)
@@ -116,9 +150,9 @@ def get_current_user():
     # Set the user in the session dictionary as a global g.user and bail out
     # of this function early.
     if session.get('user'):
-        # TODO query for user
-        g.user = session.get('user')
-        #print "user in session %s" % g.user
+        user = session.get('user')
+        user = User.query.filter(User.id == user['id']).first()
+        g.user = user
         return
 
 
@@ -148,7 +182,8 @@ def get_current_user():
 
         # Add the user to the current session
         session['user'] = dict(name=user.name, profile_url=user.profile_url,
-                               id=user.id, access_token=user.access_token)
+                               id=user.id, access_token=user.access_token,
+                               admin=user.admin)
 
         # Commit changes to the database and set the user as a global g.user
         db.session.commit()

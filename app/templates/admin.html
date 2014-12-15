@@ -1,0 +1,21 @@
+{% extends '_base.html' %}
+
+{% block content %}
+  <br>
+  <div class="content">
+  <table class="pure-table">
+    <tr>
+      <th>Name</th>
+      <th>LastLogin</th>
+      <th>Created</th>
+    </tr>
+    {% for u in users %}
+      <tr>
+        <td>{{ u.name }}</td>
+        <td>{{ u.last_login }}</td>
+        <td>{{ u.created }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+  </div>
+{% endblock %}

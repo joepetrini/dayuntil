@@ -50,3 +50,7 @@ ADSENSE_TOP = """
 ADSENSE_BOTTOM = """
                     FULL ADSENSE CODE HERE
                  """
+
+INSPECTLET_CODE = """
+                     FULL CODE HERE
+                  """

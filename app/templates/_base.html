@@ -38,6 +38,8 @@
       }
     </script>
     {% block head %}{% endblock %}
+    {% if not config.DEBUG %}{{ config.INSPECTLET_CODE|safe }}{% endif %}
+
   </head>
 
 <body>
@@ -63,6 +65,17 @@
             js.src = "//connect.facebook.net/en_US/all.js";
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
+
+        function post_to_feed(caption) {
+          FB.ui({
+            method: 'feed',
+            link: document.URL,
+            caption: $('#days-till-h').html() + ' until ' + $('#day-name').html() ,
+          }, function (response) {
+            var posted = true;
+            // TODO update userday field?
+          });
+        }
     </script>
 
   <div id="menu">
@@ -86,8 +99,11 @@
     <div id="footer">
       <div class="content">
         <div class="pure-g">
-          <div class="pure-u-1 right">
-            <a href="/contact">contact</a>
+          <div class="pure-u-1-2" style="color:#efefef">
+            {{ session.tz }}
+          </div>
+          <div class="pure-u-1-2 right">
+            <a href="/contact">Contact Us</a>
           </div>
         </div>
       </div>

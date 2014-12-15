@@ -17,7 +17,7 @@ class User(db.Model, Timestamp):
 
     #email = db.Column(db.String(255), unique=True)
     #password = db.Column(db.String(120))
-    #active = db.Column(db.Boolean())
+    admin = db.Column(db.Boolean(), default=False)
 
 
 #class Concept(db.Model, Timestamp):
@@ -56,6 +56,19 @@ class Day(db.Model, Timestamp):
 
     def add_view(self):
         self.view_count += 1
+
+
+class UserDay(db.Model, Timestamp):
+    __tablename__ = "userdays"
+
+    id = db.Column(db.Integer(), primary_key=True)
+
+    user_id = db.Column(db.ForeignKey('users.id'), nullable=False)
+    user = db.relationship('User',
+                            backref=db.backref('days', lazy='dynamic'))
+
+    date = db.Column(db.String(8), nullable=False)
+    name = db.Column(db.String(100), nullable=False)
 
 
 class Fact(db.Model, Timestamp):
