@@ -188,3 +188,5 @@ def get_current_user():
         # Commit changes to the database and set the user as a global g.user
         db.session.commit()
         g.user = session.get('user', None)
+    else:
+        g.user = None

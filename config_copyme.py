@@ -10,6 +10,10 @@ SITE_URL = "http://www.mydomain.com"
 PERMANENT_SESSION_LIFETIME = 31536000
 DEFAULT_TZ = 'America/Chicago'
 
+
+# Google spreadsheet key for loading dates
+GSHEET_KEY = ""
+
 # Database connection string
 SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BASE_DIR, 'data.db')
 #SQLALCHEMY_DATABASE_URI = 'mysql://user:pass@localhost/dbname'
